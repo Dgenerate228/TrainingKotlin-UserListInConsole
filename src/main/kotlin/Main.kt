@@ -1,4 +1,3 @@
-import Person.id
 import kotlin.random.Random
 
 object Person {
@@ -24,7 +23,7 @@ object Person {
         "Никитович", "Глебович", "Маркович", "Давидович", "Ярославович",
         "Матвеевич", "Фёдорович", "Николаевич", "Андреевич", "Тимофеевич",
         "Артемий", "Викторович", "Леонидович", "Даниилович", "Денисович",
-        "Егорович", "Игоревич", "Павлович", "Романович", "Русланович",
+        "Егорович", "Игоревич", "Павлович", "Романович", "Русланович"
     )
 
     //Фамилия
@@ -35,7 +34,7 @@ object Person {
         "Давидов", "Ярославов", "Евгеньев", "Матвеев", "Фёдоров",
         "Марков", "Никитов", "Николаев", "Артемьев", "Викторов",
         "Данилов", "Денисов", "Глебов", "Тимофеев", "Егоров",
-        "Игорь", "Леонидов", "Павлов", "Романов", "Русланов",
+        "Игорь", "Леонидов", "Павлов", "Романов", "Русланов"
     )
 
     //День рождения. С ним разберусь попозже, пока сделаю обычный список
@@ -63,18 +62,16 @@ object Person {
     private var bRand = Random.nextInt(bSize)
     var users =
         mutableListOf(
-            "[${id}] " +
-                    "${lastName[lRand]} ${firstName[fRand]}. ${middleName[mRand]}. " +
-                    "${hobby[mRand]}. ${birthday[mRand]}."
+            "[${id}] ",
+            "${lastName[lRand]}", "${firstName[fRand]}.", "${middleName[mRand]}.", "${hobby[hRand]}.",
+            "${birthday[bRand]}."
         )
-
-
 }
 
 // Случайная генерация пользователей с выводом на экран
 fun main(args: Array<String>) {
-
-    Person.users.clear()
+    var mainListFun = Person.users
+    mainListFun.clear()
     val amountUsers: Int = (5..5).random()
 
     for (id in 1..amountUsers) {
@@ -100,11 +97,11 @@ fun main(args: Array<String>) {
         val bNameFun = Person.birthday[bRandFun]
 
         Person.users.add("[${id}] $lNameFun $fNameFun.$mNameFun. $hNameFun. $bNameFun ")
-
-        Person.id + 1
+        println( Person.users.size)
+        // mainListFun[0] + 1
         id + 1
-
     }
+
 
     Person.users.forEach { println(it) }
     changingList()
@@ -114,10 +111,9 @@ fun main(args: Array<String>) {
 fun changingList() {
     var mainList = Person.users
 
-    println("Для просмотра подробностей о сотруднике введите его номер")
+    //println("Для просмотра подробностей о сотруднике введите его номер")
     println("Для изменения списка сотрудников введите: Изменить/Добавить/Удалить")
     var inputChange = readLine()
-
 
     when (inputChange) {
         "Добавить" -> {
@@ -128,6 +124,7 @@ fun changingList() {
             var lNameFun = inputChange
             println("Введите Имя")
             inputChange = readLine()
+            inputChange!!.first()
             var fNameFun = inputChange
             println("Введите Отчество")
             inputChange = readLine()
@@ -144,17 +141,24 @@ fun changingList() {
             println(mainList[inputInt - 1])
             mainList.removeAt(inputInt - 1)
             println("Сотрудник удален")
-            
             mainList.forEach { println(it) }
-
         }
 
         "Изменить" -> {
             println("Введите номер сотрудника")
-            var inputInt = readLine()!!.toInt()
+            var inputInt = readLine()!!.toInt() - 1
+            println("Что конкретно собираетесь изменить ?")
+            println("Фамилия/Имя/Отчество/Хобби/ДатаР/Всё")
+            inputChange = readLine()
+            if (inputChange == "Фамилия") {
+                println("Введите требуемую фамилию")
+                inputChange = readLine()
+              //  Person.users.
+                //Person.lastName[inputInt] == inputChange
+               // println(mainList)
+            }
             println("Сотрудник изменен")
-            println(mainList[inputInt - 1])
-
+            mainList.forEach { println(it) }
         }
     }
 
