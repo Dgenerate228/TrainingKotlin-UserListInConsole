@@ -63,16 +63,19 @@ object Person {
     var users =
         mutableListOf(
             "[${id}] ",
-            "${lastName[lRand]}", "${firstName[fRand]}.", "${middleName[mRand]}.", "${hobby[hRand]}.",
+            lastName[lRand], "${firstName[fRand]}.", "${middleName[mRand]}.", "${hobby[hRand]}.",
             "${birthday[bRand]}."
         )
+
 }
 
 // Случайная генерация пользователей с выводом на экран
 fun main(args: Array<String>) {
+//    Person.users.forEach { println(it) }
+//    println("прогнали список")
     var mainListFun = Person.users
     mainListFun.clear()
-    val amountUsers: Int = (5..5).random()
+    val amountUsers: Int = (1..100).random()
 
     for (id in 1..amountUsers) {
 
@@ -82,11 +85,11 @@ fun main(args: Array<String>) {
 
         val fSizeFun = Person.firstName.size
         val fRandFun = Random.nextInt(fSizeFun)
-        val fNameFun = Person.firstName[fRandFun].first()
+        val fNameFun = Person.firstName[fRandFun].take(1)
 
         val mSizeFun = Person.middleName.size
         val mRandFun = Random.nextInt(mSizeFun)
-        val mNameFun = Person.middleName[mRandFun].first()
+        val mNameFun = Person.middleName[mRandFun].take(1)
 
         val hSizeFun = Person.hobby.size
         val hRandFun = Random.nextInt(hSizeFun)
@@ -96,15 +99,14 @@ fun main(args: Array<String>) {
         val bRandFun = Random.nextInt(bSizeFun)
         val bNameFun = Person.birthday[bRandFun]
 
-        Person.users.add("[${id}] $lNameFun $fNameFun.$mNameFun. $hNameFun. $bNameFun ")
-        println( Person.users.size)
-        // mainListFun[0] + 1
-        id + 1
-    }
+        Person.users.add("[$id] $lNameFun $fNameFun.$mNameFun. $hNameFun. $bNameFun. ")
+        Person.id + 1
 
+    }
 
     Person.users.forEach { println(it) }
     changingList()
+
 }
 
 //Внесение изменений в список
@@ -123,13 +125,19 @@ fun changingList() {
             inputChange = readLine()
             var lNameFun = inputChange
             println("Введите Имя")
-            inputChange = readLine()
-            inputChange!!.first()
+            inputChange = readLine()!!.take(1)
             var fNameFun = inputChange
             println("Введите Отчество")
-            inputChange = readLine()
+            inputChange = readLine()!!.take(1)
             var mNameFun = inputChange
-            mainList.add("[$id] $lNameFun $fNameFun.$mNameFun.")
+            println("Введите Хобби")
+            inputChange = readLine()
+            var hNameFun = inputChange
+            println("Введите Дату рождения")
+            println("В формате DD/MM/YEAR - без нулей")
+            inputChange = readLine()
+            var bNameFun = inputChange
+            mainList.add("[${id}] $lNameFun $fNameFun.$mNameFun. $hNameFun. $bNameFun ")
             println("Добавляем сотрудника")
             mainList.forEach { println(it) }
 
@@ -153,11 +161,11 @@ fun changingList() {
             if (inputChange == "Фамилия") {
                 println("Введите требуемую фамилию")
                 inputChange = readLine()
-              //  Person.users.
-                //Person.lastName[inputInt] == inputChange
-               // println(mainList)
+                Person.lastName[inputInt] = inputChange!!
+
             }
             println("Сотрудник изменен")
+            println(mainList[inputInt])
             mainList.forEach { println(it) }
         }
     }
