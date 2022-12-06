@@ -1,15 +1,7 @@
+// Пали нейминги а то трахнут
 import kotlin.random.Random
 
-//создать класс, использовать его в объекте +
-//класс в отдельный файл +
-//object перенести в другой файл +
-
-//в fun main только отображение данных +
-//Создать функцию createUsers внутри object Person и там сделать создание списка через что-то -
-//можно создать класс внутри объекта ?
-
 object Person {
-
 
     //Имя
     private var firstName = mutableListOf(
@@ -41,7 +33,7 @@ object Person {
         "Давидов", "Ярославов", "Евгеньев", "Матвеев", "Фёдоров",
         "Марков", "Никитов", "Николаев", "Артемьев", "Викторов",
         "Данилов", "Денисов", "Глебов", "Тимофеев", "Егоров",
-        "Игорь", "Леонидов", "Павлов", "Романов", "Русланов"
+        "Игорев", "Леонидов", "Павлов", "Романов", "Русланов"
     )
 
     //День рождения. С ним разберусь попозже, пока сделаю обычный список
@@ -57,183 +49,208 @@ object Person {
         "Рыбалка", "Бокс", "Фото", "Рисование", "Фильмы"
     )
 
-    private var usersList = mutableListOf("")
-    private var lNameList = mutableListOf("")
-    private var fNameList = mutableListOf("")
-    private var mNameList = mutableListOf("")
-    private var hNameList = mutableListOf("")
-    private var bNameList = mutableListOf("")
+    var person = PersonModel(
+        lastName = String(),
+        firstName = String(),
+        middleName = String(),
+        hobby = String(),
+        birthday = String()
+    )
+
+    var personsList: MutableList<String> =
+        mutableListOf("${person.lastName} ${person.firstName.take(1)} ${person.middleName.take(1)}")
+
 
     fun createList() {
 
+        val amountPersons: Int = (5..5).random()
 
-        val amountUsers: Int = (1..100).random()
+        for (id in 1..amountPersons) {
 
-        for (id in 1..amountUsers) {
+            val lastName = lastName[Random.nextInt(lastName.size)]
+            val firstName = firstName[Random.nextInt(firstName.size)]
+            val middleName = middleName[Random.nextInt(middleName.size)]
+            val hobby = hobby[Random.nextInt(hobby.size)]
+            val birthday = birthday[Random.nextInt(birthday.size)]
 
-            val lRand = Random.nextInt(lastName.size)
-            val lName = lastName[lRand]
+            val person = PersonModel(
+                lastName = lastName,
+                firstName = firstName,
+                middleName = middleName,
+                hobby = hobby,
+                birthday = birthday
+            )
 
-            val fRand = Random.nextInt(firstName.size)
-            val fName = firstName[fRand]
-
-            val mRand = Random.nextInt(middleName.size)
-            val mName = middleName[mRand]
-
-            val hRand = Random.nextInt(hobby.size)
-            val hName = hobby[hRand]
-
-            val bRand = Random.nextInt(birthday.size)
-            val bName = birthday[bRand]
-
-            usersList.add("[$id] $lName ${fName.take(1)}. ${mName.take(1)}. ")
-            lNameList.add(lName)
-            fNameList.add(fName)
-            mNameList.add(mName)
-            hNameList.add(hName)
-            bNameList.add(bName)
-
+            personsList.add(
+                " ${person.lastName} ${person.firstName.take(1)} ${person.middleName.take(1)}"
+            )
         }
-        usersList.forEach { println(it) }
+        personsList.forEach { println(it) }
+
     }
 
 
     //Работает
-    fun addUser() {
+    fun addPerson() {
 
-        val id = usersList.size + 1
+        val id = personsList.size
 
-        println("Введите Фамилию")
-        var input = readLine() ?: ""
-        val lName = input
-        lNameList.add(input)
-        println("Введите Имя")
-        input = readLine()!!
-        val fName = input
-        fNameList.add(input)
-        println("Введите Отчество")
-        input = readLine()!!
-        val mName = input
-        mNameList.add(input)
-        println("Введите Хобби")
-        input = readLine() ?: ""
-        hNameList.add(input)
-        println("Введите Дату рождения")
-        println("В формате DD.MM.YEAR - без нулей")
-        input = readLine() ?: ""
-        bNameList.add(input)
-        usersList.add("[$id] $lName ${fName.take(1)}. ${mName.take(1)}.")
-        println("Добавляем сотрудника")
-        usersList.forEach { println(it) }
+        println(Strings.ENTER_LASTNAME.value)
+        val inputLastName = readLine() ?: ""
+        println(Strings.ENTER_FIRSTNAME.value)
+        val inputFirstName = readLine() ?: ""
+        println(Strings.ENTER_MIDDLE_NAME.value)
+        val inputMiddleName = readLine() ?: ""
+        println(Strings.ENTER_HOBBY.value)
+        val hobby = readLine() ?: ""
+        println(Strings.ENTER_BIRTHDAY.value)
+        val birthday = readLine() ?: ""
+
+        val person = PersonModel(
+            lastName = inputLastName,
+            firstName = inputFirstName,
+            middleName = inputMiddleName,
+            hobby = hobby,
+            birthday = birthday
+        )
+
+        personsList.add("[$id] ${person.lastName} ${person.firstName.take(1)}. ${person.middleName.take(1)}.")
+        println(Strings.PERSON_ADD.value)
+        personsList.forEach { println(it) }
+
 
     }
 
     //Проблема с айдишниками
-    fun deleteUser() {
-        println(usersList)
-        println("Введите номер сотрудника")
+    fun deletePerson() {
+        println(Strings.ENTER_NUMBER.value)
         val input = readLine()?.toInt() ?: 1
-        usersList.removeAt(input)
-        println("Сотрудник удален")
-        usersList.forEach { println(it) }
+        personsList.removeAt(input)
+        println(Strings.PERSON_DELETE.value)
+        personsList.forEach { println(it) }
     }
 
-
-    //Работает. Переделать
-    fun changeUser() {
-
-        println("Введите номер сотрудника")
+    fun detailPerson() {
+        println(Strings.ENTER_NUMBER.value)
         val inputInt = readLine()!!.toInt()
-        println("Что конкретно собираетесь изменить ?")
-        println("Фамилия/Имя/Отчество/Хобби/ДатаР/Всё")
+        (lastName[inputInt])
+        val person = PersonModel(
+            lastName = personsList[inputInt],
+            firstName = firstName[inputInt],
+            middleName = middleName[inputInt],
+            hobby = hobby[inputInt],
+            birthday = birthday[inputInt]
+        )
 
-        when (readLine()) {
-            "Фамилия" -> {
-                println("Введите требуемую фамилию")
-                val input = readLine()!!.toString()
-                println(usersList[inputInt])
-                val id = inputInt
-                val lName = input
-                val fName = fNameList[inputInt]
-                val mName = mNameList[inputInt]
+        println(person)
+//        val nameDetail: PersonModel = Person.personsList(lastName) + " " + fNameList[inputInt] + " " + mNameList[inputInt]
+//        val otherDetail = Strings.HOBBY.value + ": " + hNameList[inputInt] + ".\n" +
+//                Strings.BIRTHDAY.value + bNameList[inputInt]
 
-                usersList[inputInt] = "[$id] $lName ${fName.take(1)}. ${mName.take(1)}."
-
-                println("Сотрудник изменен. Стал:")
-                println(usersList[inputInt])
-                usersList.forEach { println(it) }
-            }
-
-            "Имя" -> {
-                println("Введите требуемую фамилию")
-                val input = readLine()!!.toString()
-                println(usersList[inputInt])
-                val id = inputInt
-                val lName = lNameList[inputInt]
-                val fName = input
-                fNameList[inputInt] = input
-                val mName = mNameList[inputInt]
-                usersList[inputInt] = "[$id] $lName ${fName.take(1)}. ${mName.take(1)}."
-
-                println("Сотрудник изменен. Стал:")
-                println(usersList[inputInt])
-                usersList.forEach { println(it) }
-            }
-
-            "Отчество" -> {
-                println("Введите требуемую фамилию")
-                val input = readLine()!!.toString()
-                println(usersList[inputInt])
-                val id = inputInt
-                val lName = lNameList[inputInt]
-                val fName = fNameList[inputInt]
-                val mName = input
-                mNameList[inputInt] = input
-
-                usersList[inputInt] = "[$id] $lName ${fName.take(1)}. ${mName.take(1)}."
-
-                println("Сотрудник изменен. Стал:")
-                println(usersList[inputInt])
-                usersList.forEach { println(it) }
-            }
-
-            "ДатаР" -> {
-                println("Введите требуемую фамилию")
-                val input = readLine()!!.toString()
-                println(usersList[inputInt])
-
-                bNameList[inputInt] = input
-
-                println("Дата рождения у сотрудника изменена")
-                println(usersList[inputInt])
-                usersList.forEach { println(it) }
-            }
-
-            "Хобби" -> {
-                println("Введите требуемую фамилию")
-                val input = readLine()!!.toString()
-                println(usersList[inputInt])
-
-                hNameList[inputInt] = input
-
-                println("Изменено хобби у сотрудника:")
-                println(usersList[inputInt])
-                usersList.forEach { println(it) }
-            }
-        }
+//        println(nameDetail)
+//        println(otherDetail)
     }
 
-    //Работает
-    fun detailUser() {
-        println("Введите номер сотрудника")
+    fun changeAPersonBirthday() {
+        println(Strings.ENTER_NUMBER.value)
         val inputInt = readLine()!!.toInt()
+        println(Strings.ENTER_BIRTHDAY.value)
+        birthday = readLine()
 
-        val nameDetail = lNameList[inputInt] + " " + fNameList[inputInt] + " " + mNameList[inputInt]
-        val otherDetail = "Хобби: " + hNameList[inputInt] + "." + " Дата рождения: " + bNameList[inputInt]
+        val person = PersonModel(
+            lastName = Person.(lastName[inputInt]),
+            firstName = firstName[inputInt],
+            middleName = middleName[inputInt],
+            hobby = hobby[inputInt],
+            birthday = birthday[inputInt]
+        )
+        println(person)
 
-        println(nameDetail)
-        println(otherDetail)
+
     }
+
+    fun changePerson() {
+//
+//        println(Strings.ENTER_NUMBER.value)
+//        val inputInt = readLine()!!.toInt()
+//        println(Strings.WHAT_CHANGE.value)
+//
+//        when (readLine()) {
+//            Strings.LASTNAME.value -> {
+//                println(Strings.ENTER_LASTNAME.value)
+//                val input = readLine()!!.toString()
+//                println(personsList[inputInt])
+//                val id = inputInt
+//                val lastName = input
+//                val firstName = fNameList[inputInt]
+//                val middleName = mNameList[inputInt]
+//
+//                personsList[inputInt] = "[$id] $lastName ${firstName.take(1)}. ${middleName.take(1)}."
+//
+//                println(Strings.PERSON_CHANGE.value)
+//                println(personsList[inputInt])
+//                personsList.forEach { println(it) }
+//            }
+//
+//            Strings.FIRSTNAME.value -> {
+//                println(Strings.ENTER_FIRSTNAME.value)
+//                val input = readLine()!!.toString()
+//                println(personsList[inputInt])
+//                val id = inputInt
+//                val lName = lNameList[inputInt]
+//                val fName = input
+//                fNameList[inputInt] = input
+//                val mName = mNameList[inputInt]
+//                personsList[inputInt] = "[$id] $lName ${fName.take(1)}. ${mName.take(1)}."
+//
+//                println(Strings.PERSON_CHANGE.value)
+//                println(personsList[inputInt])
+//                personsList.forEach { println(it) }
+//            }
+//
+//            Strings.MIDDLE_NAME.value -> {
+//                println(Strings.ENTER_MIDDLE_NAME.value)
+//                val input = readLine()!!.toString()
+//                println(personsList[inputInt])
+//                val id = inputInt
+//                val lName = lNameList[inputInt]
+//                val fName = fNameList[inputInt]
+//                val mName = input
+//                mNameList[inputInt] = input
+//
+//                personsList[inputInt] = "[$id] $lName ${fName.take(1)}. ${mName.take(1)}."
+//
+//                println(Strings.PERSON_CHANGE.value)
+//                println(personsList[inputInt])
+//                personsList.forEach { println(it) }
+//            }
+//
+//            Strings.BIRTHDAY_REDUCTION.value -> {
+//                println(Strings.ENTER_BIRTHDAY.value)
+//                val input = readLine()!!.toString()
+//                println(personsList[inputInt])
+//
+//                bNameList[inputInt] = input
+//
+//                println(Strings.BIRTHDAY_CHANGE.value)
+//                println(personsList[inputInt])
+//                personsList.forEach { println(it) }
+//            }
+//
+//            Strings.HOBBY.value -> {
+//                println(Strings.ENTER_HOBBY.value)
+//                val input = readLine()!!.toString()
+//                println(personsList[inputInt])
+//
+//                hNameList[inputInt] = input
+//
+//                println(Strings.HOBBY_CHANGE.value)
+//                println(personsList[inputInt])
+//                personsList.forEach { println(it) }
+//            }
+//        }
+    }
+
 
 }
 

@@ -1,41 +1,36 @@
-// Вопросы вове:
-//1. Почему при обращении в main Creation.changingList() выдает ошибку
-//А при обращении Person.actionClass.changingList() нормально изменяет
-//2. Изначально я перенес создание списка юзеров в отдельный класс. При вызове переменной со списком оттуда
-//она возвращалась к изначальному значению. Почему ?
-//3. Не могу разобраться как сделать цикл возврата к началу when
-//4. Создать публичный метод который будет формировать строку для вывода, назвать ее типа printUsers
-//Вот тут не понял как это реализовать
-//fun main(args: Array<String>)
-
 fun main(args: Array<String>) {
 
     Person.createList()
-    Loop@ println("Что собираетесь делать ?")
-    println("Подробности/Добавить/Удалить/Изменить/Конец")
+    while (true) {
+        println(Strings.WHAT_DO.value)
+        when (readLine()) {
+            Strings.ADD.value -> {
+                Person.addPerson()
+            }
 
-    when (readLine()) {
-        "Добавить" -> {
-            Person.addUser()
-        }
+            Strings.REMOVE.value -> {
+                Person.deletePerson()
+            }
 
-        "Удалить" -> {
-            Person.deleteUser()
-        }
+            Strings.CHANGE.value -> {
+                Person.changeAPersonBirthday()
+            }
 
-        "Изменить" -> {
-            Person.changeUser()
-        }
+            Strings.DETAILS.value -> {
+                Person.detailPerson()
+            }
 
-        "Подробности" -> {
-            Person.detailUser()
-        }
+            Strings.CLOSE.value -> {
+                return
+            }
 
-        else -> {
-            println("Произошла ошибка, введите заново")
+            else -> {
+                println(Strings.ERROR.value)
 
+            }
         }
     }
+
 
 }
 
