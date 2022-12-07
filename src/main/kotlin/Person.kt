@@ -1,4 +1,5 @@
 // Пали нейминги а то трахнут
+import java.text.FieldPosition
 import kotlin.random.Random
 
 object Person {
@@ -133,7 +134,7 @@ object Person {
     fun detailPerson() {
         println(Strings.ENTER_NUMBER.value)
         val inputInt = readLine()!!.toInt()
-        (lastName[inputInt])
+        lastName[inputInt]
         val person = PersonModel(
             lastName = personsList[inputInt],
             firstName = firstName[inputInt],
@@ -153,19 +154,13 @@ object Person {
 
     fun changeAPersonBirthday() {
         println(Strings.ENTER_NUMBER.value)
-        val inputInt = readLine()!!.toInt()
+        val position = readLine()!!.toInt()
         println(Strings.ENTER_BIRTHDAY.value)
-        birthday = readLine()
 
-        val person = PersonModel(
-            lastName = Person.(lastName[inputInt]),
-            firstName = firstName[inputInt],
-            middleName = middleName[inputInt],
-            hobby = hobby[inputInt],
-            birthday = birthday[inputInt]
-        )
+        person = PersonModel(personsList[position])
+        val birthday = readln()
+        person = person.copy(birthday = birthday)
         println(person)
-
 
     }
 

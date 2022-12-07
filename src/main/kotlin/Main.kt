@@ -13,7 +13,7 @@ fun main(args: Array<String>) {
             }
 
             Strings.CHANGE.value -> {
-                Person.changeAPersonBirthday()
+    Person.changeAPersonBirthday()
             }
 
             Strings.DETAILS.value -> {
