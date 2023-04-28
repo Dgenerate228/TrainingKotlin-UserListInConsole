@@ -1,3 +1,5 @@
+import Person
+
 fun main(args: Array<String>) {
 
     Person.createList()
@@ -13,7 +15,7 @@ fun main(args: Array<String>) {
             }
 
             Strings.CHANGE.value -> {
-    Person.changeAPersonBirthday()
+                Person.changePerson()
             }
 
             Strings.DETAILS.value -> {
